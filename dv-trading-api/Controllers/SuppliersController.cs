@@ -24,7 +24,7 @@ namespace dv_trading_api.Controllers
 
             if (suppliers != null)
             {
-                var suppliersDto = suppliers.Select(s => s.toSupplierDto());
+                var suppliersDto = suppliers.Select(s => s.ToSupplierDto());
                 return Ok(suppliersDto);
             }
 
@@ -43,7 +43,7 @@ namespace dv_trading_api.Controllers
                 return NotFound("Supplier not found");
             }
 
-            return Ok(supplier.toSupplierDto());
+            return Ok(supplier.ToSupplierDto());
         }
 
         [HttpPost]
@@ -54,7 +54,7 @@ namespace dv_trading_api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var supplierModel = newSupplier.toSupplierModelFromCreate();
+            var supplierModel = newSupplier.ToSupplierModelFromCreate();
 
             _unitOfWork.SupplierRepository.AddSupplier(supplierModel);
 
@@ -62,7 +62,7 @@ namespace dv_trading_api.Controllers
 
             if (result)
             {
-                return CreatedAtAction(nameof(GetById), new {id = supplierModel.Id}, supplierModel.toSupplierDto());
+                return CreatedAtAction(nameof(GetById), new {id = supplierModel.Id}, supplierModel.ToSupplierDto());
             }
             else
             {
@@ -98,7 +98,7 @@ namespace dv_trading_api.Controllers
 
             if (result)
             {
-                return Ok(supplierModel.toSupplierDto());
+                return Ok(supplierModel.ToSupplierDto());
             }
             else
             {

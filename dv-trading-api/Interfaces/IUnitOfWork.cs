@@ -4,6 +4,8 @@
     {
         ISupplierRepository SupplierRepository { get; }
 
+        ICustomerRepository CustomerRepository { get; }
+
         Task<bool> SaveChangesAsync();
     }
 }

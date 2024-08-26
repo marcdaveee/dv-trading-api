@@ -6,7 +6,7 @@ namespace dv_trading_api.Mappers
     public static class SupplierMapper
     {
 
-        public static SupplierDto toSupplierDto(this Supplier model)
+        public static SupplierDto ToSupplierDto(this Supplier model)
         {
             var supplierDto = new SupplierDto
             {
@@ -21,7 +21,7 @@ namespace dv_trading_api.Mappers
             return supplierDto;
         }
 
-        public static Supplier toSupplierModelFromCreate(this CreateSupplierDto newSupplier)
+        public static Supplier ToSupplierModelFromCreate(this CreateSupplierDto newSupplier)
         {
             var supplierModel = new Supplier
             {
