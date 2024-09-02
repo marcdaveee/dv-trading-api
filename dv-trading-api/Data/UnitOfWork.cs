@@ -17,6 +17,8 @@ namespace dv_trading_api.Data
         
         public ICustomerRepository CustomerRepository => new CustomerRepository(_context);
 
+        public ITransactionRepository TransactionRepository => new TransactionRepository(_context);
+
         public async Task<bool> SaveChangesAsync()
         {
             var result = await _context.SaveChangesAsync();

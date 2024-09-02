@@ -13,5 +13,7 @@
         public string? ContactNo { get; set; } = string.Empty;
 
         public string? Email { get; set; } = string.Empty;
+
+        public IEnumerable<Transaction> Transactions { get; set; } = new List<Transaction>();
     }
 }
