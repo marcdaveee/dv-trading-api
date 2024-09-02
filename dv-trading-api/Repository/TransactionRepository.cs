@@ -24,5 +24,12 @@ namespace dv_trading_api.Repository
         {
             _context.Add(newTransaction);
         }
+
+        public async Task<Transaction?> GetById(int id)
+        {
+            var transaction = await _context.Transactions.Include(t => t.Supplier).Include(t => t.Customer).AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
+
+            return transaction;
+        }
     }
 }

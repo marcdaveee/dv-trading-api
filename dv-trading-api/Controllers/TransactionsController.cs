@@ -1,7 +1,9 @@
-﻿using dv_trading_api.Interfaces;
+﻿using dv_trading_api.Dtos.Transaction;
+using dv_trading_api.Interfaces;
 using dv_trading_api.Mappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace dv_trading_api.Controllers
 {
@@ -32,10 +34,41 @@ namespace dv_trading_api.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] )
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
+            var transaction = await _unitOfWork.TransactionRepository.GetById(id);
+            if (transaction == null)
+            {
+                return NotFound("No transaction with id: " + id + "found");
+            }
 
+            return Ok(transaction.ToTransactionDto());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] CreateTransactionDto newTransactionDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var newTransactionModel = newTransactionDto.ToTransactionModelFromCreateDto();
+
+            _unitOfWork.TransactionRepository.Add(newTransactionModel);
+
+            var result = await _unitOfWork.SaveChangesAsync();
+
+            if (result)
+            {
+                return CreatedAtAction(nameof(GetById), new { id = newTransactionModel.Id }, newTransactionModel.ToTransactionDto());
+            }
+            else
+            {
+                return StatusCode(500);
+            }
         }
 
     }
