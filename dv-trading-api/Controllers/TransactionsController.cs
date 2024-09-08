@@ -19,8 +19,9 @@ namespace dv_trading_api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
+            // Get all transactions from db; returned transactions are sorted in descending order based from its date
             var transactions = await _unitOfWork.TransactionRepository.GetAllAsync();
 
             if (!transactions.Any())

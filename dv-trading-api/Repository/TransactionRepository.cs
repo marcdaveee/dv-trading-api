@@ -16,7 +16,7 @@ namespace dv_trading_api.Repository
 
         public async Task<IEnumerable<Transaction>> GetAllAsync()
         {
-            var transactions = await _context.Transactions.Include(t => t.Supplier).Include(t => t.Customer).AsNoTracking().ToListAsync();
+            var transactions = await _context.Transactions.Include(t => t.Supplier).Include(t => t.Customer).OrderByDescending(t => t.Date).AsNoTracking().ToListAsync();
             return transactions;
         }
 
@@ -30,6 +30,13 @@ namespace dv_trading_api.Repository
             var transaction = await _context.Transactions.Include(t => t.Supplier).Include(t => t.Customer).AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
 
             return transaction;
+        }
+
+        public async Task<int?> GetCurrentMonthTransactionsCount()
+        {
+            var currentMonthTransactionCount = await _context.Transactions.CountAsync();
+
+            return currentMonthTransactionCount;
         }
     }
 }

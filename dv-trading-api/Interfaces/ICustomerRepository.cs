@@ -10,5 +10,7 @@ namespace dv_trading_api.Interfaces
         void Add(Customer customer);        
         void Update(Customer customerModel, UpdateCustomerDto updatedCustomer);
         void Delete(Customer customer);
+
+        Task<int?> GetCount();
     }
 }

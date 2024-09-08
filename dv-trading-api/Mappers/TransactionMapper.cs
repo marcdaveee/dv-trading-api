@@ -10,6 +10,7 @@ namespace dv_trading_api.Mappers
             var transactionDto = new TransactionDto
             {
                 Id = model.Id,                
+                Date = model.Date,
                 NetWeight = model.NetWeight,
                 CustomerId = model.CustomerId,
                 SupplierId = model.SupplierId,
@@ -51,6 +52,7 @@ namespace dv_trading_api.Mappers
         {
             var transaction = new Transaction
             {
+                Date = newTransactionDto.Date,
                 CustomerId = newTransactionDto.CustomerId,
                 SupplierId = newTransactionDto.SupplierId,
                 NetWeight = newTransactionDto.NetWeight,

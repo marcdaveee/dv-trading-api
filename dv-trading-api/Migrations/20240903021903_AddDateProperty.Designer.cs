@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using dv_trading_api.Data;
 
@@ -11,9 +12,11 @@ using dv_trading_api.Data;
 namespace dv_trading_api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240903021903_AddDateProperty")]
+    partial class AddDateProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,6 +190,53 @@ namespace dv_trading_api.Migrations
                     b.HasIndex("SupplierId");
 
                     b.ToTable("Transactions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 27995m,
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Expenses = 500m,
+                            MeterKgs = 70m,
+                            Moisture = 7m,
+                            NetResecada = 927m,
+                            NetWeight = 1001m,
+                            NoOfSacks = 24m,
+                            PricePerKg = 30.2m,
+                            SupplierId = 1,
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 25066m,
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Expenses = 500m,
+                            MeterKgs = 67m,
+                            Moisture = 7.5m,
+                            NetResecada = 830m,
+                            NetWeight = 900m,
+                            NoOfSacks = 21m,
+                            PricePerKg = 30.2m,
+                            SupplierId = 2,
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Amount = 194807m,
+                            CustomerId = 1,
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Expenses = 500m,
+                            MeterKgs = 246m,
+                            Moisture = 4m,
+                            NetResecada = 5904m,
+                            NetWeight = 6150m,
+                            NoOfSacks = 149m,
+                            PricePerKg = 33m,
+                            Type = 1
+                        });
                 });
 
             modelBuilder.Entity("dv_trading_api.Models.Transaction", b =>

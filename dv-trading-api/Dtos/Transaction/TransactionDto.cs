@@ -8,7 +8,7 @@ namespace dv_trading_api.Dtos.Transaction
     {
         public int Id { get; set; }
 
-
+        public DateTime Date { get; set; }
         public int? CustomerId { get; set; }
 
         public CustomerDto? Customer { get; set; }

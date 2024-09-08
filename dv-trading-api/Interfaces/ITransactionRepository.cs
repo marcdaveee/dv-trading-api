@@ -9,5 +9,7 @@ namespace dv_trading_api.Interfaces
         Task<Transaction?> GetById(int id);
 
         void Add(Transaction newTransaction);
+
+        Task<int?> GetCurrentMonthTransactionsCount();
     }
 }

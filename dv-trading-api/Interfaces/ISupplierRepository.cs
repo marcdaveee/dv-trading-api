@@ -14,5 +14,7 @@ namespace dv_trading_api.Interfaces
         void UpdateSupplier(Supplier supplierModel, UpdateSupplierDto updatedSupplier);
 
         void DeleteSupplier(Supplier supplierModel);
+
+        Task<int?> GetCount();
     }
 }

@@ -8,6 +8,8 @@
 
         ITransactionRepository TransactionRepository { get; }
 
+        
+
         Task<bool> SaveChangesAsync();
     }
 }

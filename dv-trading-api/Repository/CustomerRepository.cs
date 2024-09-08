@@ -47,6 +47,11 @@ namespace dv_trading_api.Repository
             _context.Remove(customer);
         }
 
+        public async Task<int?> GetCount()
+        {
+            return await _context.Customers.CountAsync();
+        }
+
 
     }
 }

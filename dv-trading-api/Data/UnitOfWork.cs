@@ -1,5 +1,6 @@
 ﻿using dv_trading_api.Interfaces;
 using dv_trading_api.Repository;
+using dv_trading_api.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace dv_trading_api.Data
@@ -18,6 +19,8 @@ namespace dv_trading_api.Data
         public ICustomerRepository CustomerRepository => new CustomerRepository(_context);
 
         public ITransactionRepository TransactionRepository => new TransactionRepository(_context);
+
+        
 
         public async Task<bool> SaveChangesAsync()
         {

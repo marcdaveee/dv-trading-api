@@ -23,53 +23,53 @@ namespace dv_trading_api.Data
             modelBuilder.Entity<Transaction>().HasOne(t => t.Customer).WithMany(c => c.Transactions).HasForeignKey(t => t.CustomerId).IsRequired(false);
             modelBuilder.Entity<Transaction>().HasOne(t => t.Supplier).WithMany(s => s.Transactions).HasForeignKey(t => t.SupplierId).IsRequired(false);
 
-            modelBuilder.Entity<Transaction>().HasData(
-                new Transaction
-                {
-                    Id = 1,
-                    SupplierId= 1,
-                    CustomerId = null,
-                    NetWeight = 1001,
-                    Moisture = 7,
-                    MeterKgs = 70,
-                    NetResecada = 927,
-                    PricePerKg = 30.2M,
-                    Amount = 27995,
-                    NoOfSacks = 24,
-                    Expenses = 500,
-                    Type = TransactionType.Incoming
-                },
-                new Transaction
-                {
-                    Id = 2,
-                    SupplierId = 2,
-                    CustomerId = null,
-                    NetWeight = 900M,
-                    Moisture = 7.5M,
-                    MeterKgs = 67M,
-                    NetResecada = 830M,
-                    PricePerKg = 30.2M,
-                    Amount = 25066M,
-                    NoOfSacks = 21,
-                    Expenses = 500,
-                    Type = TransactionType.Incoming
-                },
-                new Transaction
-                {
-                    Id = 3,
-                    SupplierId = null,
-                    CustomerId = 1,
-                    NetWeight = 6150M,
-                    Moisture = 4,
-                    MeterKgs = 246M,
-                    NetResecada = 5904M,
-                    PricePerKg = 33M,
-                    Amount = 194807M,
-                    NoOfSacks = 149,
-                    Expenses = 500,
-                    Type = TransactionType.Outgoing
-                }
-               );
+            //modelBuilder.Entity<Transaction>().HasData(
+            //    new Transaction
+            //    {
+            //        Id = 1,
+            //        SupplierId= 1,
+            //        CustomerId = null,
+            //        NetWeight = 1001,
+            //        Moisture = 7,
+            //        MeterKgs = 70,
+            //        NetResecada = 927,
+            //        PricePerKg = 30.2M,
+            //        Amount = 27995,
+            //        NoOfSacks = 24,
+            //        Expenses = 500,
+            //        Type = TransactionType.Incoming
+            //    },
+            //    new Transaction
+            //    {
+            //        Id = 2,
+            //        SupplierId = 2,
+            //        CustomerId = null,
+            //        NetWeight = 900M,
+            //        Moisture = 7.5M,
+            //        MeterKgs = 67M,
+            //        NetResecada = 830M,
+            //        PricePerKg = 30.2M,
+            //        Amount = 25066M,
+            //        NoOfSacks = 21,
+            //        Expenses = 500,
+            //        Type = TransactionType.Incoming
+            //    },
+            //    new Transaction
+            //    {
+            //        Id = 3,
+            //        SupplierId = null,
+            //        CustomerId = 1,
+            //        NetWeight = 6150M,
+            //        Moisture = 4,
+            //        MeterKgs = 246M,
+            //        NetResecada = 5904M,
+            //        PricePerKg = 33M,
+            //        Amount = 194807M,
+            //        NoOfSacks = 149,
+            //        Expenses = 500,
+            //        Type = TransactionType.Outgoing
+            //    }
+            //   );
 
             modelBuilder.Entity<Customer>().HasData(
                 new Customer 

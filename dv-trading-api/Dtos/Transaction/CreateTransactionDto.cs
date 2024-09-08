@@ -5,7 +5,9 @@ using System.ComponentModel.DataAnnotations;
 namespace dv_trading_api.Dtos.Transaction
 {
     public class CreateTransactionDto
-    {        
+    {
+        [Required]        
+        public DateTime Date { get; set; }
 
         public int? CustomerId { get; set; }
         
