@@ -1,6 +1,7 @@
 ﻿using dv_trading_api.Dtos.Transaction;
 using dv_trading_api.Interfaces;
 using dv_trading_api.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -9,6 +10,7 @@ namespace dv_trading_api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TransactionsController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;

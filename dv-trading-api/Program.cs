@@ -1,11 +1,13 @@
 using dv_trading_api.Config;
 using dv_trading_api.Data;
 using dv_trading_api.Interfaces;
+using dv_trading_api.Models;
 using dv_trading_api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,9 +55,10 @@ builder.Services.AddAuthentication(
       });
 
 
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IStockService, StockService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
+
+builder.Services.AddScoped<ICustomerService, ICustomerService>();
+//builder.Services.AddScoped<IStockService, StockService>();
+//builder.Services.AddScoped<ITokenService, TokenService>();
 
 var myAllowedSpecificOrigin = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
