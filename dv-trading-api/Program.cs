@@ -2,6 +2,7 @@ using dv_trading_api.Config;
 using dv_trading_api.Data;
 using dv_trading_api.Interfaces;
 using dv_trading_api.Models;
+using dv_trading_api.Repository;
 using dv_trading_api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -56,7 +57,7 @@ builder.Services.AddAuthentication(
 
 
 
-builder.Services.AddScoped<ICustomerService, ICustomerService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 //builder.Services.AddScoped<IStockService, StockService>();
 //builder.Services.AddScoped<ITokenService, TokenService>();
 
@@ -64,8 +65,10 @@ var myAllowedSpecificOrigin = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(myAllowedSpecificOrigin, policy =>
-    {
-        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+    {        
+        policy.WithOrigins("http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 

@@ -1,19 +1,21 @@
 ﻿using dv_trading_api.Models;
+using DvTrading.Application.DTOs.Common.Response;
 using DvTrading.Application.DTOs.Supplier.Request;
+using DvTrading.Application.DTOs.Supplier.Response;
 
 namespace dv_trading_api.Interfaces
 {
     public interface ISupplierService
     {
-        Task<IEnumerable<Supplier>?> GetAllSupplier();
+        Task<IEnumerable<SupplierDto>?> GetAllSupplier();
 
-        Task<Supplier?> GetSupplierById(int id);
+        Task<SupplierDto?> GetSupplierById(int id);
 
-        void AddSupplier(Supplier supplierModel);
+        Task<DbTransactionResult<SupplierDto>> AddSupplier(CreateSupplierDto supplierToAdd);
 
-        void UpdateSupplier(Supplier supplierModel, UpdateSupplierDto updatedSupplier);
+        Task<DbTransactionResult<SupplierDto?>>UpdateSupplier(int supplierId, UpdateSupplierDto updatedSupplier);
 
-        void DeleteSupplier(Supplier supplierModel);
+        Task<DbTransactionResult<SupplierDto?>> DeleteSupplier(int id);
 
         Task<int?> GetCount();
     }

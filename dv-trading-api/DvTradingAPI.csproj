@@ -8,6 +8,16 @@
     <RootNamespace>dv_trading_api</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\AccountController.cs" />
+    <Compile Remove="Controllers\CountsController.cs" />
+    <Compile Remove="Controllers\SuppliersController.cs" />
+    <Compile Remove="Controllers\TransactionsController.cs" />
+    <Compile Remove="Mappers\CustomerMapper.cs" />
+    <Compile Remove="Mappers\SupplierMapper.cs" />
+    <Compile Remove="Mappers\TransactionMapper.cs" />
+  </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
@@ -17,6 +27,10 @@
 	  <ProjectReference Include="..\DvTrading.Application\DvTrading.Application.csproj" />
 	  <ProjectReference Include="..\DvTrading.Domain\DvTrading.Domain.csproj" />
 	  <ProjectReference Include="..\DvTrading.Infrastructure\DvTrading.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Mappers\" />
 	</ItemGroup>
 
 

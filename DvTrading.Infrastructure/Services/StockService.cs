@@ -1,19 +1,22 @@
 ﻿
+using dv_trading_api.Data;
 using dv_trading_api.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace dv_trading_api.Services
 {
     public class StockService : IStockService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public StockService(IUnitOfWork unitOfWork) { 
+        private readonly AppDbContext _context;
+
+        public StockService(AppDbContext context) { 
         
-            _unitOfWork = unitOfWork;
+            _context = context;
         }
 
         public async Task<int> GetCurrentStocksCount()
         {
-            var transactions = await _unitOfWork.TransactionRepository.GetAllAsync();
+            var transactions = await _context.Transactions.ToListAsync();
 
             //DateTime currentDate = DateTime.UtcNow;
 

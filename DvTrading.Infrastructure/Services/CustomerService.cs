@@ -51,7 +51,7 @@ namespace dv_trading_api.Repository
             return customer;
         }
 
-        public async Task<DbTransactionResult> CreateNewCustomer(CreateCustomerDto customer)
+        public async Task<DbTransactionResult<CustomerDto>> CreateNewCustomer(CreateCustomerDto customer)
         {
             var newCustomer = new Customer
             {
@@ -65,12 +65,12 @@ namespace dv_trading_api.Repository
 
             if (affectedRows > 1)
             {
-                return new DbTransactionResult()
+                return new DbTransactionResult<CustomerDto>()
                 {
                     IsSuccessful = true,
                     StatusCode = ApiStatusCode.OK,
                     Message = "New Customer Record was added!",
-                    ReturnedObj = new CustomerDto()
+                    Data = new CustomerDto()
                     {
                         Name = customer.Name,
                         Address = customer.Address,
@@ -80,7 +80,7 @@ namespace dv_trading_api.Repository
                 };
             }
 
-            return new DbTransactionResult()
+            return new DbTransactionResult<CustomerDto>()
             {
                 IsSuccessful = false,
                 StatusCode = ApiStatusCode.ServerError,
@@ -89,13 +89,13 @@ namespace dv_trading_api.Repository
 
         }
 
-        public async Task<DbTransactionResult> Update(int customerId, UpdateCustomerDto updatedCustomer)
+        public async Task<DbTransactionResult<CustomerDto?>> Update(int customerId, UpdateCustomerDto updatedCustomer)
         {
             var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId);
 
             if (customer == null)
             {
-                return new DbTransactionResult()
+                return new DbTransactionResult<CustomerDto?>()
                 {
                     IsSuccessful = false,
                     StatusCode = ApiStatusCode.NotFound,
@@ -110,12 +110,12 @@ namespace dv_trading_api.Repository
 
             await _context.SaveChangesAsync();
 
-            return new DbTransactionResult()
+            return new DbTransactionResult<CustomerDto?>()
             {
                 IsSuccessful = true,
                 StatusCode = ApiStatusCode.OK,
                 Message = "New Customer Record was updated!",
-                ReturnedObj = new CustomerDto()
+                Data = new CustomerDto()
                 {
                     Name = customer.Name,
                     Address = customer.Address,
@@ -125,13 +125,13 @@ namespace dv_trading_api.Repository
             };
         }
 
-        public async Task<DbTransactionResult> Delete(int customerId)
+        public async Task<DbTransactionResult<CustomerDto?>> Delete(int customerId)
         {
             var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId);
 
             if (customer == null)
             {
-                return new DbTransactionResult()
+                return new DbTransactionResult<CustomerDto?>()
                 {
                     IsSuccessful = false,
                     StatusCode = ApiStatusCode.NotFound,
@@ -143,7 +143,7 @@ namespace dv_trading_api.Repository
 
             await _context.SaveChangesAsync();
 
-            return new DbTransactionResult()
+            return new DbTransactionResult<CustomerDto?>()
             {
                 IsSuccessful = true,
                 StatusCode = ApiStatusCode.OK,

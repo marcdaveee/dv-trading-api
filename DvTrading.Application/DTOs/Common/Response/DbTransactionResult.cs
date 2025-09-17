@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DvTrading.Application.DTOs.Common.Response
 {
-    public class DbTransactionResult
+    public class DbTransactionResult<T>
     {        
         public bool IsSuccessful { get; set; }      
         
         public ApiStatusCode StatusCode { get; set; }
 
-        public object? ReturnedObj { get; set; }
+        public T? Data { get; set; }
 
         public string? Message {  get; set; }
     } 

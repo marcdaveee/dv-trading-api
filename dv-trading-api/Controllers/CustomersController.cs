@@ -1,50 +1,51 @@
 ﻿using dv_trading_api.Data;
-using dv_trading_api.Dtos.Customer;
+
 using dv_trading_api.Interfaces;
-using dv_trading_api.Mappers;
+
+using DvTrading.Application.DTOs.Common.Response;
+using DvTrading.Application.DTOs.Customer.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace dv_trading_api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/customers")]
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ICustomerService _customerService;
 
-        public CustomersController(IUnitOfWork unitOfWork)
+        public CustomersController(ICustomerService customerService)
         {
-            _unitOfWork = unitOfWork;
+            _customerService = customerService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var customers = await _unitOfWork.CustomerRepository.GetAllAsync();
+            var customers = await _customerService.GetAllAsync();
 
             if (customers == null)
             {
                 return Ok(null);
             }
+            
 
-            var customerDtoList = customers.Select(c => c.ToCustomerDto());
-
-            return Ok(customerDtoList);
+            return Ok(customers);
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var customerModel = await _unitOfWork.CustomerRepository.GetById(id);
+            var customer = await _customerService.GetById(id);
 
-            if (customerModel == null)
+            if (customer == null)
             {
                 return NotFound("Customer not found");
             }
 
-            return Ok(customerModel.ToCustomerDto());
+            return Ok(customer);
         }
 
         [HttpPost]        
@@ -53,21 +54,17 @@ namespace dv_trading_api.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            }                      
 
-            var customerModel = newCustomer.ToCustomerModelFromCreateDto();
+            var result = await _customerService.CreateNewCustomer(newCustomer);
 
-            _unitOfWork.CustomerRepository.Add(customerModel);
-
-            var result = await _unitOfWork.SaveChangesAsync();
-
-            if (result)
+            if (!result.IsSuccessful)
             {
-                return CreatedAtAction(nameof(GetById), new { id = customerModel.Id }, customerModel.ToCustomerDto());
+                return BadRequest(new { message = "Error Occured" });
             }
             else
             {
-                return BadRequest("Error Occured");
+                return CreatedAtAction(nameof(GetById), new { id = result.Data.Id }, result.Data);
             }
         }
 
@@ -84,26 +81,19 @@ namespace dv_trading_api.Controllers
             {
                 return BadRequest(ModelState);
             }
+                        
+            var result = await _customerService.Update(id, updatedCustomer);
 
-            var customerModel = await _unitOfWork.CustomerRepository.GetById(id);
-
-            if (customerModel == null)
+            if (!result.IsSuccessful)
             {
-                return NotFound("Customer not Found");
-            }
-
-            _unitOfWork.CustomerRepository.Update(customerModel, updatedCustomer);
-
-            var result = await _unitOfWork.SaveChangesAsync();
-
-            if (result)
-            {
-                return Ok(customerModel.ToCustomerDto());
-            }
-            else
-            {
+                if(result.StatusCode == ApiStatusCode.NotFound)
+                {
+                    return NotFound(new {message= result.Message});
+                }
                 return BadRequest("Error occured");
             }
+
+            return Ok(new {message = result.Message});
 
         }
 
@@ -111,25 +101,20 @@ namespace dv_trading_api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var customerModel = await _unitOfWork.CustomerRepository.GetById(id);
 
-            if (customerModel == null)
+
+            var result = await _customerService.Delete(id);
+
+            if (!result.IsSuccessful)
             {
-                return NotFound("Customer not Found");
+                if (result.StatusCode == ApiStatusCode.NotFound)
+                {
+                    return NotFound(new { message = result.Message });
+                }                
             }
-
-            _unitOfWork.CustomerRepository.Delete(customerModel);
-
-            var result = await _unitOfWork.SaveChangesAsync();
-
-            if (result)
-            {
-                return NoContent();
-            }
-            else
-            {
-                return BadRequest("Error occured");
-            }
+            
+                return Ok(new { message = result.Message });
+            
         }
     }
 }
