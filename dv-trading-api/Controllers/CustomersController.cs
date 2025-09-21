@@ -58,14 +58,14 @@ namespace dv_trading_api.Controllers
 
             var result = await _customerService.CreateNewCustomer(newCustomer);
 
-            if (!result.IsSuccessful)
+            if (!result.IsSuccessful )
             {
                 return BadRequest(new { message = "Error Occured" });
             }
-            else
-            {
-                return CreatedAtAction(nameof(GetById), new { id = result.Data.Id }, result.Data);
-            }
+
+   
+            return CreatedAtAction(nameof(GetById), new { id = result.Data.Id }, result.Data);
+       
         }
 
         [HttpPut]

@@ -63,7 +63,7 @@ namespace dv_trading_api.Repository
             await _context.Customers.AddAsync(newCustomer);
             var affectedRows = await _context.SaveChangesAsync();
 
-            if (affectedRows > 1)
+            if (affectedRows > 0)
             {
                 return new DbTransactionResult<CustomerDto>()
                 {

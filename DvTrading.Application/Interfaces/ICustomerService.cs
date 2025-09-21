@@ -10,7 +10,7 @@ namespace dv_trading_api.Interfaces
     {
         Task<IEnumerable<CustomerDto>> GetAllAsync();
         Task<CustomerDto?> GetById(int id);
-        Task<DbTransactionResult<CustomerDto?>> CreateNewCustomer(CreateCustomerDto customerToCreate);
+        Task<DbTransactionResult<CustomerDto>> CreateNewCustomer(CreateCustomerDto customerToCreate);
         Task<DbTransactionResult<CustomerDto?>> Update(int customerId, UpdateCustomerDto updatedCustomer);
         Task<DbTransactionResult<CustomerDto?>> Delete(int customerId);
 
