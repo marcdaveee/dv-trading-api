@@ -21,9 +21,9 @@ namespace dv_trading_api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] CustomerQueryParams queryParams)
         {
-            var customers = await _customerService.GetAllAsync();
+            var customers = await _customerService.GetAllAsync(queryParams);
 
             if (customers == null)
             {
@@ -42,7 +42,7 @@ namespace dv_trading_api.Controllers
 
             if (customer == null)
             {
-                return NotFound("Customer not found");
+                return NotFound(new { message = "Customer not found" });
             }
 
             return Ok(customer);
@@ -101,8 +101,6 @@ namespace dv_trading_api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-
-
             var result = await _customerService.Delete(id);
 
             if (!result.IsSuccessful)
@@ -111,8 +109,7 @@ namespace dv_trading_api.Controllers
                 {
                     return NotFound(new { message = result.Message });
                 }                
-            }
-            
+            }           
                 return Ok(new { message = result.Message });
             
         }

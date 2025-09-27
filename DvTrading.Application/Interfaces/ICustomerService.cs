@@ -8,7 +8,7 @@ namespace dv_trading_api.Interfaces
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<CustomerDto>> GetAllAsync();
+        Task<IEnumerable<CustomerDto>> GetAllAsync(CustomerQueryParams queryParams);
         Task<CustomerDto?> GetById(int id);
         Task<DbTransactionResult<CustomerDto>> CreateNewCustomer(CreateCustomerDto customerToCreate);
         Task<DbTransactionResult<CustomerDto?>> Update(int customerId, UpdateCustomerDto updatedCustomer);

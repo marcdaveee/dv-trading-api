@@ -19,9 +19,25 @@ namespace dv_trading_api.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<CustomerDto>> GetAllAsync()
+        public async Task<IEnumerable<CustomerDto>> GetAllAsync(CustomerQueryParams queryParams)
         {
-            var customers = await _context.Customers
+
+            var query = _context.Customers.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryParams.SearchTerm))
+            {
+                query = query.Where(c =>
+                    c.Name.ToLower().Contains(queryParams.SearchTerm.ToLower()) ||
+                    c.Address.ToLower().Contains(queryParams.SearchTerm.ToLower()                    
+                ));
+            }
+            
+            int pagesToSkip = (queryParams.PageIndex - 1) * queryParams.PageSize;
+
+            query = query.Skip(pagesToSkip)
+                .Take(queryParams.PageSize);
+           
+                var customers = await query
                 .Select(c => new CustomerDto
                 {
                     Id = c.Id,
